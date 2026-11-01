@@ -1,0 +1,10 @@
+# i3293 review-condition fixture (own test repo only)
+queue_rules:
+  - name: reviewq
+    queue_conditions:
+      - base = main
+    merge_conditions:
+      - base = main
+      - "#approved-reviews-by >= 1"
+    merge_method: merge
+    batch_size: 1
