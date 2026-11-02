@@ -1,10 +1,67 @@
-# i3293 review-condition fixture (own test repo only)
+# i3483 review-condition extension fixture (engagement-owned test repo only)
+pull_request_rules:
+  - name: i3483 auto merge on approval
+    conditions:
+      - base = main
+      - "title ~= ^i3483-auto"
+      - "check-success = i3483-gate"
+      - "#approved-reviews-by >= 1"
+    actions:
+      merge:
+        method: merge
+  - name: i3483 auto merge named reviewer
+    conditions:
+      - base = main
+      - "title ~= ^i3483-named"
+      - "check-success = i3483-gate"
+      - "#approved-reviews-by = JnrAvid"
+    actions:
+      merge:
+        method: merge
+
 queue_rules:
-  - name: reviewq
+  - name: i3483-crneg
     queue_conditions:
       - base = main
+      - "title ~= ^i3483-crneg"
     merge_conditions:
       - base = main
-      - "#approved-reviews-by >= 1"
+      - "-changes-requested-reviews-by = JnrAvid"
+    merge_method: merge
+    batch_size: 1
+  - name: i3483-crcount
+    queue_conditions:
+      - base = main
+      - "title ~= ^i3483-crcount"
+    merge_conditions:
+      - base = main
+      - "#changes-requested-reviews-by = 0"
+    merge_method: merge
+    batch_size: 1
+  - name: i3483-req
+    queue_conditions:
+      - base = main
+      - "title ~= ^i3483-req"
+    merge_conditions:
+      - base = main
+      - "#review-requested = 0"
+    merge_method: merge
+    batch_size: 1
+  - name: i3483-reqnamed
+    queue_conditions:
+      - base = main
+      - "title ~= ^i3483-reqnamed"
+    merge_conditions:
+      - base = main
+      - "#review-requested = JnrAvid"
+    merge_method: merge
+    batch_size: 1
+  - name: i3483-dismiss
+    queue_conditions:
+      - base = main
+      - "title ~= ^i3483-dismiss"
+    merge_conditions:
+      - base = main
+      - "#dismissed-reviews-by = 0"
     merge_method: merge
     batch_size: 1
