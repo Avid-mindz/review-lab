@@ -1,85 +1,48 @@
-# i3483 review-condition extension fixture (engagement-owned test repo only)
+# i3547 merge-admission condition binding fixture (engagement-owned repo only)
 pull_request_rules:
-  - name: i3483 auto merge on approval
+  - name: i3547 auto merge docs only
     conditions:
       - base = main
-      - "title ~= ^i3483-auto"
-      - "check-success = i3483-gate"
-      - "#approved-reviews-by >= 1"
+      - "title ~= ^i3547-auto"
+      - "files ~= ^docs/"
+      - "-files ~= ^src/security/"
     actions:
       merge:
-        method: merge
-  - name: i3483 auto merge named reviewer
-    conditions:
-      - base = main
-      - "title ~= ^i3483-named"
-      - "check-success = i3483-gate"
-      - "approved-reviews-by = JnrAvid"
-    actions:
-      merge:
-        method: merge
+        method: squash
 
 queue_rules:
-  - name: i3483-crneg
+  - name: i3547-docs
     queue_conditions:
       - base = main
-      - "title ~= ^i3483-crneg"
+      - "title ~= ^i3547-docs"
+      - "files ~= ^docs/"
     merge_conditions:
       - base = main
-      - "-changes-requested-reviews-by = JnrAvid"
-    merge_method: merge
+      - "check-success = cond-gate"
     batch_size: 1
-  - name: i3483-crcount
+    merge_method: squash
+  - name: i3547-guard
     queue_conditions:
       - base = main
-      - "title ~= ^i3483-crcount"
+      - "title ~= ^i3547-guard"
+      - "files ~= ^docs/"
+      - "-files ~= ^src/security/"
     merge_conditions:
       - base = main
-      - "#changes-requested-reviews-by = 0"
-    merge_method: merge
+      - "check-success = cond-gate"
     batch_size: 1
-  - name: i3483-req
+    merge_method: squash
+  - name: i3547-cmd
     queue_conditions:
       - base = main
-      - "title ~= ^i3483-req"
+      - "title ~= ^i3547-cmd"
+      - "files ~= ^docs/"
     merge_conditions:
       - base = main
-      - "#review-requested = 0"
-    merge_method: merge
+      - "check-success = cond-gate"
     batch_size: 1
-  - name: i3483-reqnamed
-    queue_conditions:
-      - base = main
-      - "title ~= ^i3483-reqnamed"
-    merge_conditions:
-      - base = main
-      - "review-requested = JnrAvid"
-    merge_method: merge
-    batch_size: 1
-  - name: i3483-dismiss
-    queue_conditions:
-      - base = main
-      - "title ~= ^i3483-dismiss"
-    merge_conditions:
-      - base = main
-      - "#dismissed-reviews-by = 0"
-    merge_method: merge
-    batch_size: 1
-  - name: i3483-permrev
-    queue_conditions:
-      - base = main
-      - "title ~= ^i3483-permrev"
-    merge_conditions:
-      - base = main
-      - "#approved-reviews-by >= 1"
-    merge_method: merge
-    batch_size: 1
-  - name: i3483-dismissapprove
-    queue_conditions:
-      - base = main
-      - "title ~= ^i3483-dap"
-    merge_conditions:
-      - base = main
-      - "#approved-reviews-by >= 1"
-    merge_method: merge
-    batch_size: 1
+    merge_method: squash
+
+merge_queue:
+  max_parallel_checks: 1
+  mode: serial
