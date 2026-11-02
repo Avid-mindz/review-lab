@@ -77,7 +77,7 @@ queue_rules:
   - name: i3483-dismissapprove
     queue_conditions:
       - base = main
-      - "title ~= ^i3483-dismissapprove"
+      - "title ~= ^i3483-dap"
     merge_conditions:
       - base = main
       - "#approved-reviews-by >= 1"
