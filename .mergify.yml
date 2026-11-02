@@ -64,4 +64,21 @@ queue_rules:
       - base = main
       - "#dismissed-reviews-by = 0"
     merge_method: merge
+    batch_size: 1  - name: i3483-permrev
+    queue_conditions:
+      - base = main
+      - "title ~= ^i3483-permrev"
+    merge_conditions:
+      - base = main
+      - "#approved-reviews-by >= 1"
+    merge_method: merge
+    batch_size: 1
+  - name: i3483-dismissapprove
+    queue_conditions:
+      - base = main
+      - "title ~= ^i3483-dismissapprove"
+    merge_conditions:
+      - base = main
+      - "#approved-reviews-by >= 1"
+    merge_method: merge
     batch_size: 1
