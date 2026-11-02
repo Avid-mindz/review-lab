@@ -14,7 +14,7 @@ pull_request_rules:
       - base = main
       - "title ~= ^i3483-named"
       - "check-success = i3483-gate"
-      - "#approved-reviews-by = JnrAvid"
+      - "approved-reviews-by = JnrAvid"
     actions:
       merge:
         method: merge
@@ -53,7 +53,7 @@ queue_rules:
       - "title ~= ^i3483-reqnamed"
     merge_conditions:
       - base = main
-      - "#review-requested = JnrAvid"
+      - "review-requested = JnrAvid"
     merge_method: merge
     batch_size: 1
   - name: i3483-dismiss
