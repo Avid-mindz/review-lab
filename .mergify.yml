@@ -64,7 +64,8 @@ queue_rules:
       - base = main
       - "#dismissed-reviews-by = 0"
     merge_method: merge
-    batch_size: 1  - name: i3483-permrev
+    batch_size: 1
+  - name: i3483-permrev
     queue_conditions:
       - base = main
       - "title ~= ^i3483-permrev"
